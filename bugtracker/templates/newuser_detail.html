@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="user-details">
+{{user.name}}
+<div class="tickets">
+    <h3>In Progress Tickets</h3>
+    <table class="ticket-table">
+        <tr class="ticket-header ticket-row">
+            <th class="ticket-title">
+                Title
+            </th>
+            <th class="ticket-reported-by">
+                Reported By
+            </th>
+            <th class="ticket-reported_date">
+                Reported Date
+            </th>
+        </tr>
+        {% for ticket in assigned_tickets %}
+        <tr class="ticket-row">
+            <td class="ticket-title"><a href={% url 'ticket_detail' slug=ticket.slug %}> {{ ticket.title }}</a></td>
+            <td class="ticket-reported-by">{{ ticket.reported_by }}</td>
+            <td class="ticket-reported-date">{{ ticket.reported_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<h3>Completed Tickets</h3>
+    <table class="ticket-table">
+        <tr class="ticket-header ticket-row">
+            <th class="ticket-title">
+                Title
+            </th>
+            <th class="ticket-reported-by">
+               Reported By
+            </th>
+            <th class="ticket-reported_date">
+               Reported Date
+            </th>
+            <th class="ticket-completed_date">
+                Completed Date
+            </th>
+        </tr>
+        {% for ticket in completed_tickets %}
+        <tr class="ticket-row">
+            <td class="ticket-title"><a href={% url 'ticket_detail' slug=ticket.slug %}> {{ ticket.title }}</a></td>
+            <td class="ticket-reported-by">{{ ticket.reported_by }}</td>
+            <td class="ticket-reported-date">{{ ticket.reported_date }}</td>
+            <td class="ticket-completed-date">{{ ticket.completed_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<h3>Authored Tickets</h3>
+    <table class="ticket-table">
+        <tr class="ticket-header ticket-row">
+            <th class="ticket-title">
+                Title
+            </th>
+            <th class="ticket-status">
+                Status
+            </th>
+            <th class="ticket-assigned_to">
+               Assigned To
+            </th>
+            <th class="ticket-completed_by">
+                Completed By
+            </th>
+            <th class="ticket-completed_date">
+                Completed Date
+            </th>
+        </tr>
+        {% for ticket in authored_tickets %}
+        <tr class="ticket-row">
+            <td class="ticket-title"><a href={% url 'ticket_detail' slug=ticket.slug %}> {{ ticket.title }}</a></td>
+            <td class="ticket-status">{{ ticket.status }}</td>
+            <td class="ticket-assigned-to">{{ ticket.assigned_to }}</td>
+            <td class="ticket-completed-by">{{ ticket.completed_by }}</td>
+            <td class="ticket-completed-date">{{ ticket.completed_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+
+
+{% endblock %}

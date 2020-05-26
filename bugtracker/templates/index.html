@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1><b>HOMEPAGE</b></h1>
+    <div class="user-information"><h2>Logged In User Information</h2>
+
+        <b>Username: </b>{{ request.user.username }} <br />
+        <b>Display Name: </b>{{ request.user.display_name }} <br />
+        <a href="/logout/"><button>If you're done, LogOut!</button></a>
+    </div>
+
+<br />
+
+{% if content %}
+<div class="message">
+    <h3>Message from previous page</h3>
+    <p>{{ content }}</p>
+</div>
+{% endif %}
+<a href="/submitticket/">Submit Ticket Here</a>
+
+<div class="tickets">
+    <a href="/">All Tickets</a> | <a href="?filter_by=New">New Tickets</a> | <a href="?filter_by=In Process">In Process Tickets</a>| <a href="?filter_by=Done">Done Tickets</a>
+    <table class="ticket-table">
+        <tr class="ticket-header ticket-row">
+            <th class="ticket-title">
+                {% if "title" not in order_by%}
+                    <a href="?order_by=title">Title</a>
+                {% elif order_by != "title" %}
+                    <a href="?order_by=title">Title ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=title">Title ###&&&1402;</a>
+                {% endif %}
+            </th> 
+            <th class="ticket-status">
+                {% if "status" not in order_by %}
+                    <a href="?order_by=status">Status</a>
+                {% elif order_by != "status" %}
+                    <a href="?order_by=status">Status ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-status">Status ###&&&1402;</a>
+                {% endif %}
+            </th>
+            <th class="ticket-reported-by">
+                {% if "reported_by" not in order_by %}
+                    <a href="?order_by=reported_by">Reported By</a>
+                {% elif order_by != "reported_by" %}
+                    <a href="?order_by=reported_by">Reported By ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-reported_by">Reported By ###&&&1402;</a>
+                {% endif %}
+            </th>
+            <th class="ticket-reported_date">
+                {% if "reported_date" not in order_by %}
+                    <a href="?order_by=reported_date">Reported Date</a>
+                {% elif order_by != "reported_date" %}
+                    <a href="?order_by=reported_date">Date Reported ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-reported_date">Date Reported ###&&&1402;</a>
+                {% endif %}
+            </th>
+            <th class="ticket-assigned_to">
+                {% if "assigned_to" not in order_by %}
+                    <a href="?order_by=assigned_to">Assigned To</a>
+                {% elif order_by != "assigned_to" %}
+                    <a href="?order_by=assigned_to">Assigned To ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-assigned_to">Assigned To ###&&&1402;</a>
+                {% endif %}
+            </th>
+            <th class="ticket-completed_by">
+                {% if "completed_by" not in order_by %}
+                    <a href="?order_by=completed_by">Completed By</a>
+                {% elif order_by != "completed_by" %}
+                    <a href="?order_by=completed_by">Completed By ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-completed_by">Completed By ###&&&1402;</a>
+                {% endif %}
+            </th>
+            <th class="ticket-completed_date">
+                {% if "completed_date" not in order_by %}
+                    <a href="?order_by=completed_date">Completed Date</a>
+                {% elif order_by != "completed_date" %}
+                    <a href="?order_by=completed_date">Date Completed ###&&&1402;</a>
+                {% else %}
+                    <a href="?order_by=-completed_date">Date Completed ###&&&1402;</a>
+                {% endif %}
+            </th>
+        </tr>
+        {% for ticket in tickets %}
+        <tr class="ticket-row">
+            <td class="ticket-title"><a href={% url 'ticket_detail' slug=ticket.slug %}> {{ ticket.title }}</a></td>
+            <td class="ticket-status">{{ ticket.status }}</td>
+            <td class="ticket-reported-by">{{ ticket.reported_by }}</td>
+            <td class="ticket-reported-date">{{ ticket.reported_date }}</td>
+            <td class="ticket-assigned-to">{{ ticket.assigned_to }}</td>
+            <td class="ticket-completed-by">{{ ticket.completed_by }}</td>
+            <td class="ticket-completed-date">{{ ticket.completed_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="users">
+
+    <h3>Users</h3>
+    {% if request.user.is_staff %}
+    <div class="adduser">
+        <a href="/adduser/">Add User</a>
+    </div>
+{% endif %}
+    {% for user in users %}
+        <a href={% url 'user_detail' pk=user.pk %}>{{user.display_name}}</a> <br/>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

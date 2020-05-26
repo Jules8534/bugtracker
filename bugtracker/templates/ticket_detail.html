@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="ticket-details">
+<h1>{{ ticket.title }}</h1>
+    <p class="ticket-detail-status">
+        <b>Status: </b>{{ ticket.status }}
+    </p>
+    <p class="ticket-detail-reported-by">
+        <b>Reported by: </b>{{ ticket.reported_by }}
+    </p>
+    <p class="ticket-detail-reported-date">
+        <b>Reported date:</b>{{ ticket.reported_date }}
+    </p>
+    <p class="ticket-detail-assigned-to">
+        <b>Assigned to: </b>{{ ticket.assigned_to }} 
+        {% if not ticket.completed_by %}
+        <a href={% url 'assign' slug=ticket.slug %}>Assign to me.</a>
+        {% endif %}
+    </p>
+    <p class="ticket-detail-completed-by">
+        <b>Completed by: </b>{{ ticket.completed_by }}
+        {% if not ticket.completed_by %}
+            <a href={% url 'complete' slug=ticket.slug %}>I completed this ticket.</a>
+        {% endif %}
+    </p>
+    <p class="ticket-detail-completed-date">
+        <b>Completed date: </b>{{ ticket.completed_date }}
+    </p>
+    {% if ticket.status is not "Invalid" %}
+    <p><a href={% url 'editticket' slug=ticket.slug %}>Edit ticket</a></p>
+    <p><a href={% url 'invalidate' slug=ticket.slug %}>Mark ticket invalid.</a></p>
+    {% endif %}
+</div>
+
+
+{% endblock %} 
