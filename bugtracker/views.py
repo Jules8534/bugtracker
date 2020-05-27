@@ -17,10 +17,10 @@ def index(request):
     else:
         tickets = Ticket.objects.all().filter(status=filter_by)
     order_by = request.GET.get('order_by', '-status')
-    tickets = tickets.exclude(status="Invalid").order_by(order_by)
-    users = MyUser.obects.all()
+    tickets = tickets.order_by(order_by)
+    users = MyUser.objects.all()
     if request.user.is_authenticated:
-        return render(request.html, {"tickets": tickets, "order_by": order_by, "users": users})
+        return render(request, html, {"tickets": tickets, "order_by": order_by, "users": users})
     return redirect("/login/")
 
 
@@ -40,7 +40,7 @@ def login_view(request):
                     request.GET.get('next', reverse('homepage')))
 
     form = LogInForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'login_form.html', {'form': form})
 
 
 def logout_view(request):
@@ -67,7 +67,7 @@ def newuser_view(request):
             # login(request, new_user)
             content = "User successfully added"
             return HttpResponseRedirect(
-                request.GET.get('next', reverse('homepage')), {'content: content'})
+                request.GET.get('next', reverse('homepage')), {'content': content})
         return render(request, "newuser_form.html", {"form": form})
     if request.user.is_authenticated:
         form = NewCustomUser()
@@ -105,7 +105,7 @@ def ticket_detail(request, slug):
 
 def newuser_detail(request, pk):
     if request.user.is_authenticated:
-        user = MyUser.object.get(pk=pk)
+        user = MyUser.objects.get(pk=pk)
         completed_tickets = Ticket.objects.filter(completed_by=user)
         assigned_tickets = Ticket.objects.filter(assigned_to=user)
         authored_tickets = Ticket.objects.filter(reported_by=user)
@@ -133,10 +133,10 @@ def edit_ticket(request, slug):
                             request.GET.get('next', reverse('homepage'))                              
                 )
 
-        old_ticket = Ticket.object.get(slug=slug)
+        old_ticket = Ticket.objects.get(slug=slug)
         form = SubmitTicket(initial={"title":old_ticket.title, "description":old_ticket.description})
         return render(request, "edit_ticket_form.html", {"form": form})
-    return redirect("/login")
+    return redirect("/login/")
 
 
 def assign(request, slug):

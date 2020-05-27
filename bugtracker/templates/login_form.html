@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>LOGIN FORM</h1>
+<h2>LOGIN FORM</h2>
 
-<h2><b>You must log in to access this site!</b></h2>
-<form method="post">
+<h3>You must login to access this site!</h3>
+<form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit!">
-</form>
+    <input type="submit" value="Submit Here!">
+</form action>
 
 
 {% endblock %} 

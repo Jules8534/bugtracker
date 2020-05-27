@@ -3,11 +3,11 @@
 
 <h1>FORM</h1>
 
-<form method="post">
+<form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit Here!">
-</form>
+</form action>
 
 
 {% endblock %}

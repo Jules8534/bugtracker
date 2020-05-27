@@ -105,8 +105,8 @@
 
     <h3>Users</h3>
     {% if request.user.is_staff %}
-    <div class="adduser">
-        <a href="/adduser/">Add User</a>
+    <div class="newuser">
+        <a href="/newuser/">Add New User</a>
     </div>
 {% endif %}
     {% for user in users %}
